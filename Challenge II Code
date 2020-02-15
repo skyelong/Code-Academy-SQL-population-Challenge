@@ -1,0 +1,54 @@
+-- This is the first query:
+
+SELECT DISTINCT year from population_years;
+
+-- Add your additional queries below:
+
+-- Largest Population for Gabon
+select max(population) from population_years
+where country = 'Gabon';
+
+-- 10 lowest population countries in 2005
+select country, population from population_years
+where population is not null
+and year = 2005
+order by population asc
+limit 10;
+
+--distinct countries with populations over 100 mill in 2010
+select distinct country from population_years
+where population > 100
+and year = 2010
+order by 1;
+
+--number of countries with Islands in their names
+select count(country) from population_years
+where country like '%Islands%';
+
+select * from population_years
+where country = 'Indonesia'
+order by year;
+
+--Difference between 2000 and 2010 not manual
+
+with indo2000 as (
+select *
+from population_years
+  where country = 'Indonesia'
+  and year = 2000
+),
+
+indo2010 as (
+select *
+from population_years
+  where country = 'Indonesia'
+  and year = 2010
+)
+select indo2000.population - indo2010.population as 'Difference in Population'
+from indo2000
+join indo2010
+on indo2000.country = indo2010.country;
+
+-- manual 
+select (214 - 242);
+
