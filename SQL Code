@@ -1,0 +1,54 @@
+select count(continent) as 'Countries from Africa' from countries
+where continent = 'Africa';
+
+with oceana as (
+select *
+from population_years 
+where year = 2005 )
+
+select sum(oceana.population) as 'Oceania Population'
+from oceana
+join countries
+on oceana.country_id = countries.id
+where countries.continent = 'Oceania';
+
+with south as (
+select *
+from population_years
+where year = 2003)
+
+select round(avg(south.population), 2) as 'Average South American Population 2003'
+from south
+join countries
+on south.country_id = countries.id
+where continent = 'South America';
+
+select countries.name, min(population_years.population) as 'Population'
+from countries
+join population_years
+on countries.id = population_years.country_id
+where population_years.year = 2007;
+
+select countries.name, population_years.population as 'Population'
+from countries
+join population_years
+on countries.id = population_years.country_id
+where population_years.year = 2007
+order by 2 asc
+limit 5;
+
+select countries.name, avg(population_years.population) as 'Average Population', count(population_years.year) as 'Number of Years'
+from countries
+join population_years
+on countries.id = population_years.country_id
+where countries.name = 'Poland';
+
+select count(name) from countries
+where name like '% The%';
+
+select countries.continent as 'Continent', sum(population_years.population) as 'Population in 2010'
+from countries
+join population_years
+on countries.id = population_years.country_id
+group by 1
+order by 2 desc;
